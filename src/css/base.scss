@@ -1,7 +1,26 @@
 //@import "bootstrap/dist/css/bootstrap.min.css";
 
-$bg-color: pink;
-
 body {
-    background: $bg-color;
+    background: #23272a;
+}
+
+.grid {
+    margin-top: 85px;
+    display: grid;
+    width: 100%;
+    grid-auto-flow: column;
+    grid-template-columns: 60% 40%;
+}
+
+.grid-left {
+    background-color: #ff0000;
+    width: 70%;
+    height: 100px;
+    justify-self: end;
+}
+
+.grid-right {
+    background-color: #00ff00;
+    width: 40%;
+    height: 100px;
 }
