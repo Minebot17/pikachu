@@ -5,6 +5,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './css/base.scss';
 import { ButtonGroup, Button, Nav, Navbar, Form } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
+import AuthPanelStore from './stores/AuthPanelStore.jsx';
+import AuthPanel from './components/AuthPanel.jsx';
 
 function setTimeLine(key){
     switch (key) {
@@ -48,29 +50,7 @@ ReactDOM.render(
         </div>
         <Switch>
             <Route path="/auth/">
-                <div class="auth-background">
-                    <div class="auth-panel">
-                        <div class="auth-form">
-                            <Form>
-                                <Form.Group>
-                                    <Form.Label class="white-label">Login</Form.Label>
-                                    <Form.Control type="text" placeholder="Enter login"/>
-                                </Form.Group>
-                                <Form.Group>
-                                    <Form.Label class="white-label">Email</Form.Label>
-                                    <Form.Control type="email" placeholder="Enter email" />
-                                </Form.Group>
-                                <Form.Group>
-                                    <Form.Label class="white-label">Password</Form.Label>
-                                    <Form.Control type="password" placeholder="Enter password" />
-                                </Form.Group>
-                                <Button variant="secondary" type="submit">
-                                    Подтвердить
-                                </Button>
-                            </Form>
-                        </div>
-                    </div>
-                </div>
+                <AuthPanel store={new AuthPanelStore()}/>
             </Route>
         </Switch>
     </Router>
