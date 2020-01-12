@@ -47,13 +47,14 @@ class AuthPanel extends React.Component {
             this.isLogin = false;
         else {
             this.sumbitClick();
+            return;
         }
 
         const store = this.props.store;
         return (
             <div class={"auth-background" + (store.closing ? " auth-background-closing" : "")} onClick={()=>this.sumbitClick()}>
                 <div class={"auth-panel" + (store.closing ? " auth-panel-closing" : "")} onClick={()=>this.cancelClick()}>
-                    <div class={"auth-form" + (login ? " auth-login" : " auth-register")}>
+                    <div class={"auth-form" + (this.isLogin ? " auth-login" : " auth-register")}>
                         <Form onSubmit={(e)=>this.handleSubmit(e)}>
                             <Form.Group>
                                 <Form.Label class="white-label">Login</Form.Label>
