@@ -1,44 +1,28 @@
 const express = require("express");
-const app = express();
-// создаем парсер для данных в формате json
-const jsonParser = express.json();
-//const firstRouter = require("./routes/authRouter.js");
 
+const lentRouter = require("./routes/lentRouter.js");
+const authRouter = require("./routes/authRouter.js");
+
+const jsonParser = express.json();
+const app = express();
 const mysql = require("mysql2");
   
-const connection = mysql.createConnection({
+global.connection = mysql.createConnection({
   host: "141.8.192.151",
   user: "f0386668_pikachu",
   database: "f0386668_pikachu",
   password: "123456789"
-});
+}).promise();
 
- connection.connect(function(err){
-    if (err) {
-      return console.error("Ошибка: " + err.message);
-    }
-    else{
-      console.log("Подключение к серверу MySQL успешно установлено");
-    }
- });
+connection.connect().then(res=>{console.log(`true`)}).catch(err=>{console.log(`err: ${err}`)})
  
-app.get("/", function(request, response){
-    connection.query("SELECT * FROM posts ORDER BY rating;",
-  		function(err, results, fields) {
-    		//console.log(err);
-    		//console.log(results); // собственно данные
-    		//console.log(fields); // мета-данные полей 
-    		console.log(`jsssooonnn: ${results}`);
-    		// отправляем ответ
-    		response.send(results);
-		}
-	);
-	/*console.log(`jsssooonnn: ${result}`);
-    // отправляем ответ
-    response.send(res);*/
-});
 
-//app.use("/users", firstRouter);;
+app.use("/test", function(request, response){
+  response.sendFile(__dirname + "/test.html");
+});
+app.use("/auth", authRouter);
+app.use("/", lentRouter);
+
 
 app.use(function (req, res, next) {
     res.status(404).send("Not Found")
