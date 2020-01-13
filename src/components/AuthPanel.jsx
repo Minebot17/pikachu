@@ -25,7 +25,7 @@ class AuthPanel extends React.Component {
         e.preventDefault();
 
         const xhr = new XMLHttpRequest();
-        xhr.open("POST", this.isLogin ? 'auth/login' : 'auth/register', true);
+        xhr.open("POST", this.isLogin ? '/auth/login' : '/auth/register', true);
         xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
         xhr.onreadystatechange = function() {
             console.log(xhr.readyState);
@@ -34,7 +34,11 @@ class AuthPanel extends React.Component {
                 this.props.store.userInfoStore.setLogin(this.login);
             }
         }
-        xhr.send({ "login": this.login, "email": this.email, "password": this.password });
+        console.log(this.email);
+        console.log(this.login);
+        console.log(`\"${this.password}\"`);
+        var body = 'login=' + encodeURIComponent(this.login) + '&email=' + encodeURIComponent(this.email) + '&password=' + encodeURIComponent(this.password);
+        xhr.send(body);
     }
 
     cancelClick(){
@@ -70,7 +74,7 @@ class AuthPanel extends React.Component {
                             </Form.Group>
                             {!this.isLogin ? <Form.Group>
                                 <Form.Label class="white-label">Email</Form.Label>
-                                <Form.Control type="email" placeholder="Ввердите email" onChange={(email)=>{ this.email = email.target.value }} />
+                                <Form.Control type="text" placeholder="Ввердите email" onChange={(email)=>{ this.email = email.target.value }} />
                             </Form.Group> : null}
                             <Form.Group>
                                 <Form.Label class="white-label">Пароль</Form.Label>

@@ -15,7 +15,7 @@ global.connection = mysql.createConnection({
 }).promise();
 
 connection.connect()
-  .then(res=>{console.log(`true`)})
+  .then(res=>{console.log(`db connected`)})
   .catch(err=>{console.log(`err: ${err}`)})
 
 app.use("/auth", authRouter);

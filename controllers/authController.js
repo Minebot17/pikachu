@@ -9,13 +9,13 @@ exports.login = function (request, response){
         console.log(`ress: "${rows}"`);
         if(rows == ""){
           console.log("not login");
-          response.send(201);
+          response.send(201); //no such user
         }
-        if(rows[0].password == request.body.password){
-          response.send(204);
+        else if(rows[0].password == request.body.password){
+          response.send(204); //all good
         }
         else 
-          response.send(202);
+          response.send(202); //wrong password
       })
       .catch(err=>{
          console.log(`err: ${err}`);
@@ -24,7 +24,12 @@ exports.login = function (request, response){
 };
 
 exports.register = function(request, response){
+
   emailRegexp = /.*@.*/;
+  /*console.log(`request ${request.body}`);
+  console.log(`email ${request.body.email}`);
+  console.log(`pass ${request.body.password}`);
+  console.log(`login ${request.body.login}`);*/
 
   if(!request.body) return response.sendStatus(400);
 
@@ -36,12 +41,16 @@ exports.register = function(request, response){
         .then(([rows, fields]) =>{
           console.log(`ress: ${rows}`);
           // отправляем ответ
-          response.send(rows);
+          response.send(204); //registration complete
         })
         .catch(err=>{
            console.log(`err: ${err}`);
           response.send(203);
         })
     }
-    else response.send("Email не действителен");
+    else{ 
+      response.send(205);  //wrong email
+      console.log(`not register ${request.body.email}`);
+
+    }
 };

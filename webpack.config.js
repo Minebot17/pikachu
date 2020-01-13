@@ -9,6 +9,8 @@ module.exports = {
        filename: "bundle.js"       // название создаваемого файла
    },
    devServer: {
+     inline:true,
+     port: 3000,
      historyApiFallback: true,
    },
    module:{

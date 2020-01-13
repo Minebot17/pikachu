@@ -1,26 +1,35 @@
 exports.best = function (request, response){
-    connection.query("SELECT * FROM posts ORDER BY rating DESC;",
-  		function(err, results, fields) {
-    		console.log(`jsssooonnn: ${results}`);
-    		// отправляем ответ
-    		response.send(results);
-		})
+    connection.query("SELECT * FROM posts ORDER BY rating DESC;")
+    .then(results =>{
+    	console.log(`jsssooonnn: ${results}`);
+    	// отправляем ответ
+    	response.send(results);
+    })
+    .catch(err=>{
+    	console.log(`err: ${err}`)
+    })
 };
 
 exports.fresh = function(request, response){
-    connection.query("SELECT * FROM posts ORDER BY date DESC;",
-  		function(err, results, fields) {
-    		console.log(`jsssooonnn: ${results}`);
-    		// отправляем ответ
-    		response.send(results);
-		})
+    connection.query("SELECT * FROM posts ORDER BY date DESC;")
+    .then(results =>{
+    	console.log(`jsssooonnn: ${results}`);
+    	// отправляем ответ
+    	response.send(results);
+    })
+    .catch(err=>{
+    	console.log(`err: ${err}`)
+    })
 };
 
 exports.hot = function(request,response){
-	connection.query("SELECT * FROM posts ORDER BY date DESC;",
-  		function(err, results, fields) {
-    		console.log(`jsssooonnn: ${results}`);
-    		// отправляем ответ
-    		response.send(results);
-		})
+	connection.query("SELECT * FROM posts ORDER BY date DESC;")
+    .then(results =>{
+    	console.log(`jsssooonnn: ${results}`);
+    	// отправляем ответ
+    	response.send(results);
+    })
+    .catch(err=>{
+    	console.log(`err: ${err}`)
+    })
 }
