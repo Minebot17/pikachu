@@ -5,8 +5,13 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './css/base.scss';
 import { ButtonGroup, Button, Nav, Navbar, Form } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
+
 import AuthPanelStore from './stores/AuthPanelStore.jsx';
+import UserInfoStore from "./stores/UserInfoStore.jsx";
+
 import AuthPanel from './components/AuthPanel.jsx';
+import UserProfileLink from "./components/UserProfileLink.jsx";
+const userInfoStore = new UserInfoStore();
 
 function setTimeLine(key){
     switch (key) {
@@ -38,10 +43,14 @@ ReactDOM.render(
                 </Nav>
             </Navbar.Collapse>
             <Navbar.Collapse className="justify-content-end">
+                { !userInfoStore ?
                 <ButtonGroup>
                     <LinkContainer to="/auth/login"><Button variant="secondary" size="sm">Логин</Button></LinkContainer>
                     <LinkContainer to="/auth/register"><Button variant="secondary" size="sm">Регистрация</Button></LinkContainer>
                 </ButtonGroup>
+                :
+                <UserProfileLink store={userInfoStore}/>
+                }
             </Navbar.Collapse>
         </Navbar>
         <div class="grid">
@@ -50,7 +59,7 @@ ReactDOM.render(
         </div>
         <Switch>
             <Route path="/auth/">
-                <AuthPanel store={new AuthPanelStore()}/>
+                <AuthPanel store={new AuthPanelStore(userInfoStore)}/>
             </Route>
         </Switch>
     </Router>

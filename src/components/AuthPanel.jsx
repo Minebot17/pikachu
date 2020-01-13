@@ -28,8 +28,9 @@ class AuthPanel extends React.Component {
         xhr.open("POST", isLogin ? 'auth/login' : 'auth/register', true);
         xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
         xhr.onreadystatechange = function() {
-            if(xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200)
-                console.log("OK");
+            if(xhr.readyState == XMLHttpRequest.DONE && xhr.responseText === "true"){
+                !this.store.userInfoStore.login.setLogin(this.login);
+            }
         }
         xhr.send(JSON.parse({ "login": this.login, "email": this.email, "password": this.password }));
     }
@@ -39,6 +40,12 @@ class AuthPanel extends React.Component {
     }
 
     render(){
+        const store = this.props.store;
+        if (!store.userInfoStore.login){
+            this.sumbitClick();
+            return;
+        }
+
         const path = this.props.location.pathname.split("/");
         const loc = path[path.length-1];
         if (loc === "login")
@@ -50,23 +57,22 @@ class AuthPanel extends React.Component {
             return;
         }
 
-        const store = this.props.store;
         return (
             <div class={"auth-background" + (store.closing ? " auth-background-closing" : "")} onClick={()=>this.sumbitClick()}>
                 <div class={"auth-panel" + (store.closing ? " auth-panel-closing" : "")} onClick={()=>this.cancelClick()}>
                     <div class={"auth-form" + (this.isLogin ? " auth-login" : " auth-register")}>
                         <Form onSubmit={(e)=>this.handleSubmit(e)}>
                             <Form.Group>
-                                <Form.Label class="white-label">Login</Form.Label>
-                                <Form.Control type="text" placeholder="Enter login" onChange={(login)=>{ this.login = login.target.value }} />
+                                <Form.Label class="white-label">Логин</Form.Label>
+                                <Form.Control type="text" placeholder="Введите логин" onChange={(login)=>{ this.login = login.target.value }} />
                             </Form.Group>
                             {!this.isLogin ? <Form.Group>
                                 <Form.Label class="white-label">Email</Form.Label>
-                                <Form.Control type="email" placeholder="Enter email" onChange={(email)=>{ this.email = email.target.value }} />
+                                <Form.Control type="email" placeholder="Ввердите email" onChange={(email)=>{ this.email = email.target.value }} />
                             </Form.Group> : null}
                             <Form.Group>
-                                <Form.Label class="white-label">Password</Form.Label>
-                                <Form.Control type="password" placeholder="Enter password" onChange={(password)=>{ this.password = password.target.value }} />
+                                <Form.Label class="white-label">Пароль</Form.Label>
+                                <Form.Control type="password" placeholder="Введите пароль" onChange={(password)=>{ this.password = password.target.value }} />
                             </Form.Group>
                             <Button variant="secondary" type="submit" onClick={(e)=>this.sumbitClick(e)}>
                                 Подтвердить

@@ -3,8 +3,9 @@ import { observable, action } from 'mobx';
 class AuthPanelStore {
     @observable closing;
 
-    constructor() {
+    constructor(userInfoStore) {
         this.closing = false;
+        this.userInfoStore = userInfoStore;
     }
 
     @action
