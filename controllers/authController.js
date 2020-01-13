@@ -9,13 +9,13 @@ exports.login = function (request, response){
         console.log(`ress: "${rows}"`);
         if(rows == ""){
           console.log("not login");
-          response.send("Пользователя с таким именем не существует");
+          response.send(201);
         }
         if(rows[0].password == request.body.password){
-          response.send(true);
+          response.send(204);
         }
         else 
-          response.send("Неверный пароль");
+          response.send(202);
       })
       .catch(err=>{
          console.log(`err: ${err}`);
@@ -40,7 +40,7 @@ exports.register = function(request, response){
         })
         .catch(err=>{
            console.log(`err: ${err}`);
-          response.send("Пользователь с таким именем уже существует");
+          response.send(203);
         })
     }
     else response.send("Email не действителен");
