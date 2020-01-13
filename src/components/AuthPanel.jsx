@@ -41,9 +41,9 @@ class AuthPanel extends React.Component {
 
     render(){
         const store = this.props.store;
-        if (!store.userInfoStore.login){
+        if (store.userInfoStore.login){
             this.sumbitClick();
-            return;
+            return null;
         }
 
         const path = this.props.location.pathname.split("/");
@@ -54,7 +54,7 @@ class AuthPanel extends React.Component {
             this.isLogin = false;
         else {
             this.sumbitClick();
-            return;
+            return null;
         }
 
         return (

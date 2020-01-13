@@ -43,7 +43,7 @@ ReactDOM.render(
                 </Nav>
             </Navbar.Collapse>
             <Navbar.Collapse className="justify-content-end">
-                { !userInfoStore ?
+                { !userInfoStore.login ?
                 <ButtonGroup>
                     <LinkContainer to="/auth/login"><Button variant="secondary" size="sm">Логин</Button></LinkContainer>
                     <LinkContainer to="/auth/register"><Button variant="secondary" size="sm">Регистрация</Button></LinkContainer>
