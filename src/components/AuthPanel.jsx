@@ -25,14 +25,16 @@ class AuthPanel extends React.Component {
         e.preventDefault();
 
         const xhr = new XMLHttpRequest();
-        xhr.open("POST", isLogin ? 'auth/login' : 'auth/register', true);
+        xhr.open("POST", this.isLogin ? 'auth/login' : 'auth/register', true);
         xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
         xhr.onreadystatechange = function() {
+            console.log(xhr.readyState);
+            console.log(xhr.response);
             if(xhr.readyState == XMLHttpRequest.DONE && xhr.responseText === "true"){
-                !this.store.userInfoStore.login.setLogin(this.login);
+                this.props.store.userInfoStore.setLogin(this.login);
             }
         }
-        xhr.send(JSON.parse({ "login": this.login, "email": this.email, "password": this.password }));
+        xhr.send({ "login": this.login, "email": this.email, "password": this.password });
     }
 
     cancelClick(){
