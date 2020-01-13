@@ -14,10 +14,14 @@ global.connection = mysql.createConnection({
   password: "123456789"
 }).promise();
 
-connection.connect().then(res=>{console.log(`true`)}).catch(err=>{console.log(`err: ${err}`)})
+connection.connect()
+  .then(res=>{console.log(`true`)})
+  .catch(err=>{console.log(`err: ${err}`)})
  
 
 app.use("/test", function(request, response){
+  //emailRegexp = /.*@.*/;
+  //console.log(emailRegexp.test("sad...-1232asdasdad@sdasd"))
   response.sendFile(__dirname + "/test.html");
 });
 app.use("/auth", authRouter);
