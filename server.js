@@ -1,11 +1,8 @@
 const express = require("express");
-
-const lentRouter = require("./routes/lentRouter.js");
-const authRouter = require("./routes/authRouter.js");
-
 const jsonParser = express.json();
 const app = express();
 const mysql = require("mysql2");
+const apiRouter = require("./routes/apiRouter.js");
 
 global.connection = mysql.createConnection({
   host: "141.8.192.151",
@@ -15,11 +12,10 @@ global.connection = mysql.createConnection({
 }).promise();
 
 connection.connect()
-  .then(res=>{console.log(`true`)})
-  .catch(err=>{console.log(`err: ${err}`)})
+  .then(res=>{console.log(`Connected to DB`)})
+  .catch(err=>{console.log(`Connect to DB error: ${err}`)})
 
-app.use("/auth", authRouter);
-app.use("/lent", lentRouter);
+app.use("/api", apiRouter);
 app.use("/", express.static(__dirname + "/build"));
 app.use("/", function(req, resp){
     resp.redirect("/");

@@ -43,19 +43,12 @@ ReactDOM.render(
                 </Nav>
             </Navbar.Collapse>
             <Navbar.Collapse className="justify-content-end">
-                { !userInfoStore.login ?
-                <ButtonGroup>
-                    <LinkContainer to="/auth/login"><Button variant="secondary" size="sm">Логин</Button></LinkContainer>
-                    <LinkContainer to="/auth/register"><Button variant="secondary" size="sm">Регистрация</Button></LinkContainer>
-                </ButtonGroup>
-                :
                 <UserProfileLink store={userInfoStore}/>
-                }
             </Navbar.Collapse>
         </Navbar>
-        <div class="grid">
-            <div class="grid-left">gawgawg</div>
-            <div class="grid-right"><p>gawgawg</p></div>
+        <div className="grid">
+            <div className="grid-left">gawgawg</div>
+            <div className="grid-right"><p>gawgawg</p></div>
         </div>
         <Switch>
             <Route path="/auth/">
