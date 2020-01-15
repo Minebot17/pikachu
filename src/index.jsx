@@ -8,9 +8,11 @@ import { LinkContainer } from 'react-router-bootstrap';
 
 import AuthPanelStore from './stores/AuthPanelStore.jsx';
 import UserInfoStore from "./stores/UserInfoStore.jsx";
+import PostListStore from "./stores/PostListStore.jsx";
 
 import AuthPanel from './components/AuthPanel.jsx';
 import UserProfileLink from "./components/UserProfileLink.jsx";
+import PostList from "./components/PostList.jsx";
 const userInfoStore = new UserInfoStore();
 
 function setTimeLine(key){
@@ -47,7 +49,9 @@ ReactDOM.render(
             </Navbar.Collapse>
         </Navbar>
         <div className="grid">
-            <div className="grid-left">gawgawg</div>
+            <div className="grid-left">
+                <PostList store={new PostListStore()} />
+            </div>
             <div className="grid-right"><p>gawgawg</p></div>
         </div>
         <Switch>
