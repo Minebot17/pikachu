@@ -2,7 +2,7 @@ import ReactDOM from 'react-dom';
 import React from 'react';
 import { Pagination } from 'react-bootstrap';
 import { observer } from "mobx-react";
-import { withRouter } from "react-router-dom";
+import { withRouter, Redirect } from "react-router-dom";
 import "../css/PostList.scss";
 import PostItem from "./PostItem.jsx";
 import PostItemStore from "../stores/PostItemStore.jsx";
@@ -29,7 +29,10 @@ class PostList extends React.Component {
         const store = this.props.store;
         const posts = this.getPosts();
         const max = this.props.itemsOnPage;
-        //this.props.history.push("/" + (store.page + 1));
+
+        const loc = this.props.location.pathname.split("/");
+        if (loc[loc.length - 1] == "")
+            return <Redirect to="/last"/>
 
         let items = [];
         for (let number = 1; number <= Math.ceil(posts.length/max); number++) {
