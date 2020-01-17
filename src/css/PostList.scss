@@ -8,3 +8,39 @@
     justify-content: center;
     margin: 10px;
 }
+
+.postsPagination > li > a
+{
+    background-color: purple;
+    color: #5A4181;
+}
+
+.postsPagination > li > a:focus,
+.postsPagination > li > a:hover,
+.postsPagination > li > span:focus,
+.postsPagination > li > span:hover
+{
+    color: #5a5a5a;
+    background-color: #eee;
+    border-color: #ddd;
+}
+
+.postsPagination > .active > a
+{
+    color: white;
+    background-color: #5A4181;
+    border: solid 1px #5A4181;
+}
+
+.postsPagination > .active > a:hover
+{
+    background-color: #5A4181;
+    border: solid 1px #5A4181;
+}
+
+.page-item.active .page-link {
+    z-index: 3;
+    color: #000;
+    background-color: purple;
+    border-color: purple;
+}

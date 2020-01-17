@@ -1,8 +1,11 @@
 const express = require("express");
+const session = require('express-session');
 const jsonParser = express.json();
 const app = express();
+const http = require('http');
 const mysql = require("mysql2");
 const apiRouter = require("./routes/apiRouter.js");
+const WebSocket = require('ws');
 
 global.connection = mysql.createConnection({
   host: "141.8.192.151",
@@ -21,11 +24,24 @@ app.use("/", function(req, resp){
     resp.redirect("/");
 });
 
-/*connection.query("SELECT TOP(5) * FROM posts ORDER BY rating;",
-  function(err, results, fields) {
-    console.log(err);
-    console.log(results); // собственно данные
-    console.log(fields); // мета-данные полей
-});*/
+const server = http.createServer(app);
+const wss = new WebSocket.Server({ noServer: true });
 
-app.listen(3000);
+server.on('upgrade', function upgrade(request, socket, head) {
+    wss.handleUpgrade(request, socket, head, function done(ws) {
+      wss.emit('connection', ws, request, request);
+  });
+});
+
+wss.on('connection', function connection(ws, request) {
+
+  wss.on('open', function open(){
+    console.log(`connected`);
+  });
+
+  ws.on('message', function message(msg) {
+    console.log(`Received message ${msg} from user`);
+  });
+});
+
+server.listen(3000);

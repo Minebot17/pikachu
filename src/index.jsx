@@ -49,17 +49,17 @@ ReactDOM.render(
                 <UserProfileLink store={userInfoStore}/>
             </Navbar.Collapse>
         </Navbar>
+        <Switch>
+            <Route path="/auth/">
+                <AuthPanel store={new AuthPanelStore(userInfoStore)}/>
+            </Route>
+        </Switch>
         <div className="grid">
             <div className="grid-left">
                 <PostList store={new PostListStore()} />
             </div>
             <div className="grid-right"><p>gawgawg</p></div>
         </div>
-        <Switch>
-            <Route path="/auth/">
-                <AuthPanel store={new AuthPanelStore(userInfoStore)}/>
-            </Route>
-        </Switch>
     </Router>
     , document.getElementById("react")
 );
