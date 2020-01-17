@@ -3,7 +3,7 @@ exports.best = function (request, response){
     .then(results =>{
     	console.log(`jsssooonnn: ${results}`);
     	// отправляем ответ
-    	response.send(results);
+    	response.send(results[0]);
     })
     .catch(err=>{
     	console.log(`err: ${err}`)
@@ -15,7 +15,7 @@ exports.fresh = function(request, response){
     .then(results =>{
     	console.log(`jsssooonnn: ${results}`);
     	// отправляем ответ
-    	response.send(results);
+    	response.send(results[0]);
     })
     .catch(err=>{
     	console.log(`err: ${err}`)
@@ -27,7 +27,7 @@ exports.hot = function(request,response){
     .then(results =>{
     	console.log(`jsssooonnn: ${results}`);
     	// отправляем ответ
-    	response.send(results);
+    	response.send(results[0]);
     })
     .catch(err=>{
     	console.log(`err: ${err}`)

@@ -14,20 +14,28 @@ import PostListStore from "./stores/PostListStore.jsx";
 import AuthPanel from './components/AuthPanel.jsx';
 import UserProfileLink from "./components/UserProfileLink.jsx";
 import PostList from "./components/PostList.jsx";
+
 const userInfoStore = new UserInfoStore();
+const postListStore = new PostListStore();
+
+const ws = new WebSocket("ws://localhost:3000/");
+ws.onerror = function(e) {
+    console.log(e);
+};
+ws.onopen = function() {
+    console.log('WebSocket connection established');
+};
+ws.onmessage = function(e) {
+    console.log("Received message. ID: " + e.data.id);
+}
+
+window.onunload = function(){
+    ws.close();
+}
 
 function setTimeLine(key,a){
-    switch (key) {
-        case "hot":
-            history.push("/hot");
-            break;
-        case "best":
-            history.push("/best");
-            break;
-        case "last":
-            history.push("/last");
-            break;
-    }
+    history.push("/" + key);
+    postListStore.setType(key);
 }
 
 ReactDOM.render(
@@ -56,7 +64,7 @@ ReactDOM.render(
         </Switch>
         <div className="grid">
             <div className="grid-left">
-                <PostList store={new PostListStore()} />
+                <PostList store={postListStore} />
             </div>
             <div className="grid-right"><p>gawgawg</p></div>
         </div>

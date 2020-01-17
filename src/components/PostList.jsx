@@ -11,29 +11,10 @@ import PostItemStore from "../stores/PostItemStore.jsx";
 class PostList extends React.Component {
     static defaultProps = { itemsOnPage: 3 }
 
-    getPosts(){
-        return [
-            [4, "First", 0, "ddddddddasiogmearmepomhormhmaerh", new Date()],
-            [3, "Title0", 123, "hggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg", new Date()],
-            [2, "aen", 1, "ddddddddasiogmearmepomhormhmaerh", new Date()],
-            [1, "Hello", -5, "ddddddd", new Date()],
-            [0, "Lst", 60, "ddddddddasiogmearmepomhormhmaerh", new Date()],
-            [4, "First", 0, "ddddddddasiogmearmepomhormhmaerh", new Date()],
-            [3, "Title0", 123, "hggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg", new Date()],
-            [2, "aen", 1, "ddddddddasiogmearmepomhormhmaerh", new Date()],
-            [1, "Hello", -5, "ddddddd", new Date()],
-            [0, "Lst", 60, "ddddddddasiogmearmepomhormhmaerh", new Date()],
-            [4, "First", 0, "ddddddddasiogmearmepomhormhmaerh", new Date()],
-            [3, "Title0", 123, "hggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg", new Date()],
-            [2, "aen", 1, "ddddddddasiogmearmepomhormhmaerh", new Date()],
-            [1, "Hello", -5, "ddddddd", new Date()],
-            [0, "Lst", 60, "ddddddddasiogmearmepomhormhmaerh", new Date()],
-            [4, "First", 0, "ddddddddasiogmearmepomhormhmaerh", new Date()],
-            [3, "Title0", 123, "hggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg", new Date()],
-            [2, "aen", 1, "ddddddddasiogmearmepomhormhmaerh", new Date()],
-            [1, "Hello", -5, "ddddddd", new Date()],
-            [0, "Lst", 60, "ddddddddasiogmearmepomhormhmaerh", new Date()]
-        ];
+    constructor(props){
+        super(props);
+        this.props = props;
+        this.props.store.setType("last");
     }
 
     changePage(e){
@@ -41,13 +22,13 @@ class PostList extends React.Component {
     }
 
     render(){
-        const store = this.props.store;
-        const posts = this.getPosts();
-        const max = this.props.itemsOnPage;
-
         const loc = this.props.location.pathname.split("/");
         if (loc[loc.length - 1] == "")
             return <Redirect to="/last"/>
+
+        const store = this.props.store;
+        const posts = this.props.store.posts;
+        const max = this.props.itemsOnPage;
 
         let items = [];
         for (let number = 1; number <= Math.ceil(posts.length/max); number++) {
@@ -61,9 +42,9 @@ class PostList extends React.Component {
         return (
             <div className="postsWrapper">
                 {
-                    posts.slice(store.page*max, (posts.length < store.page*max + max ? posts.length : store.page*max + max)).map(function(value, index){
-                        return <PostItem key={value[0]} store={ new PostItemStore().setAll(value[0], value[1], value[2], value[3], value[4]) }/>
-                    })
+                    posts.length != 0 ? posts.slice(store.page*max, (posts.length < store.page*max + max ? posts.length : store.page*max + max)).map(function(value, index){
+                        return <PostItem key={value.idpost} store={ new PostItemStore().setAll(value.idpost, value.title, value.rating, value.text, value.date) }/>
+                    }) : null
                 }
                 <Pagination bg="dark" variant="dark" className="postsPagination">{items}</Pagination>
             </div>
