@@ -8,9 +8,11 @@ import { LinkContainer } from 'react-router-bootstrap';
 
 import AuthPanelStore from './stores/AuthPanelStore.jsx';
 import UserInfoStore from "./stores/UserInfoStore.jsx";
+import PostListStore from "./stores/PostListStore.jsx";
 
 import AuthPanel from './components/AuthPanel.jsx';
 import UserProfileLink from "./components/UserProfileLink.jsx";
+import PostList from "./components/PostList.jsx";
 const userInfoStore = new UserInfoStore();
 
 function setTimeLine(key){
@@ -43,25 +45,20 @@ ReactDOM.render(
                 </Nav>
             </Navbar.Collapse>
             <Navbar.Collapse className="justify-content-end">
-                { !userInfoStore.login ?
-                <ButtonGroup>
-                    <LinkContainer to="/auth/login"><Button variant="secondary" size="sm">Логин</Button></LinkContainer>
-                    <LinkContainer to="/auth/register"><Button variant="secondary" size="sm">Регистрация</Button></LinkContainer>
-                </ButtonGroup>
-                :
                 <UserProfileLink store={userInfoStore}/>
-                }
             </Navbar.Collapse>
         </Navbar>
-        <div class="grid">
-            <div class="grid-left">gawgawg</div>
-            <div class="grid-right"><p>gawgawg</p></div>
-        </div>
         <Switch>
             <Route path="/auth/">
                 <AuthPanel store={new AuthPanelStore(userInfoStore)}/>
             </Route>
         </Switch>
+        <div className="grid">
+            <div className="grid-left">
+                <PostList store={new PostListStore()} />
+            </div>
+            <div className="grid-right"><p>gawgawg</p></div>
+        </div>
     </Router>
     , document.getElementById("react")
 );

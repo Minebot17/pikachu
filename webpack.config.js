@@ -4,14 +4,19 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 module.exports = {
    entry: "./src/index.jsx", // входная точка - исходный файл
    output:{
-       path: path.resolve(__dirname, './build'),     // путь к каталогу выходных файлов - папка build
-       publicPath: '/build/',
+       path: path.resolve(__dirname, 'build'),     // путь к каталогу выходных файлов - папка build
+       publicPath: path.resolve(__dirname, '/build/'),
        filename: "bundle.js"       // название создаваемого файла
    },
-   devServer: {
-     inline:true,
-     port: 3000,
-     historyApiFallback: true,
+   devServer:{
+       contentBase: path.resolve(__dirname, 'build'),
+       publicPath: '/',
+       proxy: {
+       '/api': {
+           target: 'http://localhost:3000',
+           secure: false
+         }
+       }
    },
    module:{
         rules:[
@@ -25,17 +30,17 @@ module.exports = {
            },
            {
                 test: /\.scss$/,
-                use: ExtractTextPlugin.extract({
+                use: ['css-hot-loader'].concat(ExtractTextPlugin.extract({
                     fallback: 'style-loader',
                     use: ['css-loader', 'sass-loader']
-                })
+                }))
             },
             {
                 test: /\.css$/,
-                use: ExtractTextPlugin.extract({
+                use: ['css-hot-loader'].concat(ExtractTextPlugin.extract({
                     fallback: 'style-loader',
                     use: ['css-loader']
-                })
+                }))
             }
         ]
    },

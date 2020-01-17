@@ -25,20 +25,15 @@ class AuthPanel extends React.Component {
         e.preventDefault();
 
         const xhr = new XMLHttpRequest();
-        xhr.open("POST", this.isLogin ? '/auth/login' : '/auth/register', true);
-        xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        xhr.open("POST", this.isLogin ? '/api/auth/login' : '/api/auth/register', true);
+        xhr.setRequestHeader("Content-type", "application/json");
         xhr.onreadystatechange = function() {
-            console.log(xhr.readyState);
-            console.log(xhr.response);
-            if(xhr.readyState == XMLHttpRequest.DONE && xhr.responseText === "true"){
+            if(xhr.readyState == XMLHttpRequest.DONE && xhr.status === 200){
+              console.log(xhr.responseText);
                 this.props.store.userInfoStore.setLogin(this.login);
             }
-        }
-        console.log(this.email);
-        console.log(this.login);
-        console.log(`\"${this.password}\"`);
-        var body = 'login=' + encodeURIComponent(this.login) + '&email=' + encodeURIComponent(this.email) + '&password=' + encodeURIComponent(this.password);
-        xhr.send(body);
+        }.bind(this);
+        xhr.send(JSON.stringify({ "login": this.login, "email": this.email, "password": this.password }));
     }
 
     cancelClick(){
@@ -64,20 +59,20 @@ class AuthPanel extends React.Component {
         }
 
         return (
-            <div class={"auth-background" + (store.closing ? " auth-background-closing" : "")} onClick={()=>this.sumbitClick()}>
-                <div class={"auth-panel" + (store.closing ? " auth-panel-closing" : "")} onClick={()=>this.cancelClick()}>
-                    <div class={"auth-form" + (this.isLogin ? " auth-login" : " auth-register")}>
+            <div className={"auth-background" + (store.closing ? " auth-background-closing" : "")} onClick={()=>this.sumbitClick()}>
+                <div className={"auth-panel" + (store.closing ? " auth-panel-closing" : "")} onClick={()=>this.cancelClick()}>
+                    <div className={"auth-form" + (this.isLogin ? " auth-login" : " auth-register")}>
                         <Form onSubmit={(e)=>this.handleSubmit(e)}>
                             <Form.Group>
-                                <Form.Label class="white-label">Логин</Form.Label>
+                                <Form.Label className="white-label">Логин</Form.Label>
                                 <Form.Control type="text" placeholder="Введите логин" onChange={(login)=>{ this.login = login.target.value }} />
                             </Form.Group>
                             {!this.isLogin ? <Form.Group>
-                                <Form.Label class="white-label">Email</Form.Label>
-                                <Form.Control type="text" placeholder="Ввердите email" onChange={(email)=>{ this.email = email.target.value }} />
+                                <Form.Label className="white-label">Email</Form.Label>
+                                <Form.Control type="email" placeholder="Ввердите email" onChange={(email)=>{ this.email = email.target.value }} />
                             </Form.Group> : null}
                             <Form.Group>
-                                <Form.Label class="white-label">Пароль</Form.Label>
+                                <Form.Label className="white-label">Пароль</Form.Label>
                                 <Form.Control type="password" placeholder="Введите пароль" onChange={(password)=>{ this.password = password.target.value }} />
                             </Form.Group>
                             <Button variant="secondary" type="submit" onClick={(e)=>this.sumbitClick(e)}>

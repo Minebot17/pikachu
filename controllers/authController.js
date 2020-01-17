@@ -1,21 +1,23 @@
+const Session = require("../models/models.js");
+
 exports.login = function (request, response){
-  if(!request.body) return response.sendStatus(400);
-    console.log(request.body);
-    
-
-
+    if(!request.body)
+        return response.sendStatus(400);
     connection.query("SELECT * FROM users WHERE (login = ? OR email = ?);",[request.body.login, request.body.login])
   		.then(([rows, fields]) =>{
-        console.log(`ress: "${rows}"`);
         if(rows == ""){
-          console.log("not login");
-          response.send(201); //no such user
+          response.sendStatus(201); // User not found
         }
-        else if(rows[0].password == request.body.password){
-          response.send(204); //all good
+        if(rows[0].password == request.body.password){
+          session = new Session(Math.random());
+          session.save();
+          console.log(session);
+          response.send(session);
+          response.sendStatus(200); // Ok
         }
-        else 
-          response.send(202); //wrong password
+        else{
+          response.sendStatus(202) // Wrong password
+        }
       })
       .catch(err=>{
          console.log(`err: ${err}`);
@@ -26,31 +28,23 @@ exports.login = function (request, response){
 exports.register = function(request, response){
 
   emailRegexp = /.*@.*/;
-  /*console.log(`request ${request.body}`);
-  console.log(`email ${request.body.email}`);
-  console.log(`pass ${request.body.password}`);
-  console.log(`login ${request.body.login}`);*/
 
   if(!request.body) return response.sendStatus(400);
 
     if(emailRegexp.test(request.body.email)){
       console.log(request.body);
       console.log((new Date()).toISOString());
-        connection.query(`INSERT INTO users(login, password, email, rating, dateRegistration) VALUES (?, ?, ?, 0, '${(new Date()).toISOString()}');`, 
+        connection.query(`INSERT INTO users(login, password, email, rating, dateRegistration) VALUES (?, ?, ?, 0, '${(new Date()).toISOString()}');`,
         [request.body.login, request.body.password, request.body.email])
         .then(([rows, fields]) =>{
           console.log(`ress: ${rows}`);
           // отправляем ответ
-          response.send(204); //registration complete
+          response.sendStatus(200); //registration complete
         })
         .catch(err=>{
            console.log(`err: ${err}`);
-          response.send(203);
+          response.sendStatus(203); // Error
         })
     }
-    else{ 
-      response.send(205);  //wrong email
-      console.log(`not register ${request.body.email}`);
-
-    }
+    else response.sendStatus(204); // Invalid email
 };
