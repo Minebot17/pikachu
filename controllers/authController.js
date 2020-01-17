@@ -9,11 +9,10 @@ exports.login = function (request, response){
           response.sendStatus(201); // User not found
         }
         if(rows[0].password == request.body.password){
-          session = new Session(Math.random());
+          session = new Session(Math.floor(Math.random()*1000000), rows[0].id);
           session.save();
           console.log(session);
-          response.send(session);
-          response.sendStatus(200); // Ok
+          response.send({"id":session.id});
         }
         else{
           response.sendStatus(202) // Wrong password

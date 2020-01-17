@@ -9,6 +9,7 @@ module.exports = {
        filename: "bundle.js"       // название создаваемого файла
    },
    devServer:{
+       historyApiFallback: true,
        contentBase: path.resolve(__dirname, 'build'),
        publicPath: '/',
        proxy: {
