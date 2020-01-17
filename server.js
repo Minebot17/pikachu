@@ -1,5 +1,6 @@
 const express = require("express");
 const session = require('express-session');
+var cookieParser = require('cookie-parser');
 const jsonParser = express.json();
 const app = express();
 const http = require('http');
@@ -17,6 +18,8 @@ global.connection = mysql.createConnection({
 connection.connect()
   .then(res=>{console.log(`Connected to DB`)})
   .catch(err=>{console.log(`Connect to DB error: ${err}`)})
+
+app.use(cookieParser());
 
 app.use("/api", apiRouter);
 app.use("/", express.static(__dirname + "/build"));
