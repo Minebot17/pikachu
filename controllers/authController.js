@@ -24,6 +24,16 @@ exports.login = function (request, response){
       })
 };
 
+exports.logout = function (request, response){
+    if(user = Session.findById(request.cookies.id)){
+        Session.deleteById(user.id);
+        response.sendStatus(200);
+    }
+    else{
+      response.sendStatus(206); // not logged
+    }
+};
+
 exports.register = function(request, response){
 
   emailRegexp = /.*@.*/;
