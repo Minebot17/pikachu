@@ -6,6 +6,8 @@ import './css/base.scss';
 import history from "./history.jsx";
 import { ButtonGroup, Button, Nav, Navbar, Form } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
+import { AnimatedSwitch } from 'react-router-transition';
+import { getCookie } from "./cookies.jsx";
 
 import AuthPanelStore from './stores/AuthPanelStore.jsx';
 import UserInfoStore from "./stores/UserInfoStore.jsx";
@@ -14,6 +16,7 @@ import PostListStore from "./stores/PostListStore.jsx";
 import AuthPanel from './components/AuthPanel.jsx';
 import UserProfileLink from "./components/UserProfileLink.jsx";
 import PostList from "./components/PostList.jsx";
+import ProfilePanel from "./components/ProfilePanel.jsx";
 
 const userInfoStore = new UserInfoStore();
 const postListStore = new PostListStore();
@@ -31,6 +34,11 @@ ws.onmessage = function(e) {
 
 window.onunload = function(){
     ws.close();
+}
+
+if (getCookie("id")){
+    userInfoStore.setSessionId(getCookie("id"));
+    userInfoStore.updateUserInfo();
 }
 
 function setTimeLine(key,a){
@@ -64,7 +72,14 @@ ReactDOM.render(
         </Switch>
         <div className="grid">
             <div className="grid-left">
-                <PostList store={postListStore} />
+                <AnimatedSwitch atEnter={{ opacity: 0 }} atLeave={{ opacity: 0 }} atActive={{ opacity: 1 }} className="switch-wrapper">
+                    <Route path="/profile">
+                        <ProfilePanel store={userInfoStore} />
+                    </Route>
+                    <Route path="/">
+                        <PostList store={postListStore} />
+                    </Route>
+                </AnimatedSwitch>
             </div>
             <div className="grid-right"><p>gawgawg</p></div>
         </div>

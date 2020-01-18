@@ -1,5 +1,6 @@
 .postsWrapper {
     width: 100%;
+    opacity: 1;
 }
 
 .postsPagination {
@@ -25,7 +26,7 @@
 }
 
 .page-item.active .page-link {
-    z-index: 3;
+    z-index: 2;
     color: white;
     background-color: #7289DA;
     border-color: #7289DA;

@@ -29,7 +29,8 @@ class AuthPanel extends React.Component {
         xhr.setRequestHeader("Content-type", "application/json");
         xhr.onreadystatechange = function() {
             if(xhr.readyState == XMLHttpRequest.DONE && xhr.status === 200){
-                this.props.store.userInfoStore.setLogin(this.login);
+                this.props.store.userInfoStore.setSessionId(JSON.parse(xhr.response).id);
+                this.props.store.userInfoStore.updateUserInfo();
             }
         }.bind(this);
         xhr.send(JSON.stringify({ "login": this.login, "email": this.email, "password": this.password }));

@@ -10,6 +10,11 @@ module.exports = {
    },
    devServer:{
        historyApiFallback: true,
+       historyApiFallback: {
+           rewrites: [
+               { from: /./, to: '/index.html' }
+           ]
+       },
        contentBase: path.resolve(__dirname, 'build'),
        publicPath: '/',
        proxy: {
