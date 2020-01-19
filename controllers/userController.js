@@ -4,7 +4,7 @@ exports.lk = function (request, response){
   if(user = Session.findById(request.cookies.id)){
     connection.query("SELECT * FROM users WHERE id = (?);", [user.sqlId])
     .then(([rows, fields]) =>{
-    	console.log(`jsssooonnn: ${rows}`);
+    	console.log(`lk: ${rows}`);
       if(rows == ""){
         response.sendStatus(201); // User not found
       }
@@ -20,4 +20,16 @@ exports.lk = function (request, response){
   else{
     response.sendStatus(206); // not logged
   }
+};
+
+exports.logout = function (request, response){
+    if(user = Session.findById(request.cookies.id)){
+        Session.deleteById(user.id);
+        console.log(`logout ${user.id}`);
+        response.sendStatus(200);
+
+    }
+    else{
+      response.sendStatus(206); // not logged
+    }
 };

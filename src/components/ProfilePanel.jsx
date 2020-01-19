@@ -11,7 +11,7 @@ class ProfilePanel extends React.Component {
     exitClick(){
         // TODO:
         const xhr = new XMLHttpRequest();
-        xhr.open("GET", '/api/user/exit', true);
+        xhr.open("GET", '/api/user/logout', true);
         xhr.withCredentials = true;
         xhr.onreadystatechange = function() {
             if(xhr.readyState == XMLHttpRequest.DONE && xhr.status === 200){

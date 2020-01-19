@@ -4,6 +4,6 @@ const userRouter = express.Router();
 const jsonParser = express.json();
 
 userRouter.get("/lk", jsonParser, userController.lk);
-//userRouter.post("/register", jsonParser, userController.register);
+userRouter.get("/logout", jsonParser, userController.logout);
 
 module.exports = userRouter;
