@@ -20,6 +20,6 @@ module.exports= class Session{
     }
 
     static deleteById(id){
-        sessions.splice(session.findIndex(session => session.id == id),1);
+        sessions.splice(sessions.findIndex(session => session.id == id),1);
     }
 }
