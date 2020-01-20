@@ -1,5 +1,5 @@
 minTitle = 5;
-minText = 200;
+minText = 20;
 
 exports.add = function(request, response){
   if(!request.body) return response.sendStatus(400);

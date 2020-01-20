@@ -21,7 +21,7 @@ class PostCreator extends React.Component {
         e.preventDefault();
 
         const xhr = new XMLHttpRequest();
-        xhr.open("POST", '/api/cheburek/omnomnom', true);
+        xhr.open("POST", '/api/post/add', true);
         xhr.setRequestHeader("Content-type", "application/json");
         xhr.onreadystatechange = function() {
             if(xhr.readyState == XMLHttpRequest.DONE && xhr.status === 200){
