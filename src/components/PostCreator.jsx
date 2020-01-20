@@ -25,9 +25,13 @@ class PostCreator extends React.Component {
         xhr.open("POST", '/api/post/add', true);
         xhr.setRequestHeader("Content-type", "application/json");
         xhr.onreadystatechange = function() {
-            if(xhr.readyState == XMLHttpRequest.DONE && xhr.status === 200){
-                // TODO
-                this.props.history.push("/last");
+            if(xhr.readyState == XMLHttpRequest.DONE){
+                if (xhr.status === 200)
+                    this.props.history.push("/last");
+                else {
+                    this.setState({ clicked: false });
+                    alert("Ошибка какая-то!");
+                }
             }
         }.bind(this);
         xhr.send(JSON.stringify({ "title": this.title, "text": this.text }));
@@ -44,8 +48,8 @@ class PostCreator extends React.Component {
                     </Form.Group>
                     <Form.Group>
                         <Form.Label className="white-label">Текст поста</Form.Label>
+                        <ResizableTextarea className="creatorPanel" onChange={(text)=>{ this.text = text.target.value }}/>
                     </Form.Group>
-                    <ResizableTextarea className="creatorPanel" onChange={(text)=>{ this.text = text.target.value }}/>
                     { this.state.clicked ?
                         <Button variant="secondary" type="submit" onClick={(e)=>this.sumbitClick(e)}>
                             <Spinner
