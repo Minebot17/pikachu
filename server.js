@@ -7,16 +7,13 @@ const mysql = require("mysql2");
 const apiRouter = require("./routes/apiRouter.js");
 const WebSocket = require('ws');
 
-global.connection = mysql.createConnection({
+global.pool = mysql.createPool({
     host: "141.8.192.151",
     user: "f0386668_pikachu",
     database: "f0386668_pikachu",
     password: "123456789"
 }).promise();
 
-connection.connect()
-.then(res=>{console.log(`Connected to DB`)})
-.catch(err=>{console.log(`Connect to DB error: ${err}`)})
 
 app.use(cookieParser());
 

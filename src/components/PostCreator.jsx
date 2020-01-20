@@ -4,6 +4,7 @@ import { Button, Form, Spinner } from 'react-bootstrap';
 //import { observer } from "mobx-react";
 import { withRouter } from "react-router-dom";
 import "../css/PostCreator.scss";
+import ResizableTextarea from "./ResizableTextarea.jsx";
 
 //@observer
 class PostCreator extends React.Component {
@@ -43,8 +44,8 @@ class PostCreator extends React.Component {
                     </Form.Group>
                     <Form.Group>
                         <Form.Label className="white-label">Текст поста</Form.Label>
-                        <Form.Control as="textarea" rows="5" placeholder="Бла-бла-бла" onChange={(text)=>{ this.text = text.target.value }} />
                     </Form.Group>
+                    <ResizableTextarea className="creatorPanel" onChange={(text)=>{ this.text = text.target.value }}/>
                     { this.state.clicked ?
                         <Button variant="secondary" type="submit" onClick={(e)=>this.sumbitClick(e)}>
                             <Spinner

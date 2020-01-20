@@ -1,5 +1,5 @@
 exports.best = function (request, response){
-    connection.query("SELECT * FROM posts ORDER BY rating DESC;")
+    pool.query("SELECT * FROM posts ORDER BY rating DESC;")
     .then(results =>{
     	// отправляем ответ
     	response.send(results[0]);
@@ -10,7 +10,7 @@ exports.best = function (request, response){
 };
 
 exports.fresh = function(request, response){
-    connection.query("SELECT * FROM posts ORDER BY date DESC;")
+    pool.query("SELECT * FROM posts ORDER BY date DESC;")
     .then(results =>{
     	// отправляем ответ
     	response.send(results[0]);
@@ -21,7 +21,7 @@ exports.fresh = function(request, response){
 };
 
 exports.hot = function(request,response){
-	connection.query("SELECT * FROM posts ORDER BY date DESC;")
+	pool.query("SELECT * FROM posts ORDER BY date DESC;")
     .then(results =>{
     	// отправляем ответ
     	response.send(results[0]);

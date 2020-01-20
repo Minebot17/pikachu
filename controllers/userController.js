@@ -2,7 +2,7 @@ const Session = require("../models/models.js");
 
 exports.lk = function (request, response){
   if(user = Session.findById(request.cookies.id)){
-    connection.query("SELECT * FROM users WHERE id = (?);", [user.sqlId])
+    pool.query("SELECT * FROM users WHERE id = (?);", [user.sqlId])
     .then(([rows, fields]) =>{
     	console.log(`lk: ${rows}`);
       if(rows == ""){
