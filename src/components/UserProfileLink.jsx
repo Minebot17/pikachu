@@ -15,7 +15,10 @@ class UserProfileLink extends React.Component {
                     <LinkContainer to="/auth/register"><Button variant="secondary" size="sm">Регистрация</Button></LinkContainer>
                 </ButtonGroup>
             :
-                <LinkContainer to="/profile"><Button variant="secondary" size="sm">{store.login}</Button></LinkContainer>
+                <ButtonGroup>
+                    <LinkContainer to="/createPost"><Button variant="secondary" size="sm">Создать новый пост</Button></LinkContainer>
+                    <LinkContainer to="/profile"><Button variant="secondary" size="sm">{store.login}</Button></LinkContainer>
+                </ButtonGroup>
         );
     }
 }

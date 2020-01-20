@@ -17,6 +17,7 @@ import AuthPanel from './components/AuthPanel.jsx';
 import UserProfileLink from "./components/UserProfileLink.jsx";
 import PostList from "./components/PostList.jsx";
 import ProfilePanel from "./components/ProfilePanel.jsx";
+import PostCreator from "./components/PostCreator.jsx";
 
 const userInfoStore = new UserInfoStore();
 const postListStore = new PostListStore();
@@ -73,6 +74,9 @@ ReactDOM.render(
         <div className="grid">
             <div className="grid-left">
                 <AnimatedSwitch atEnter={{ opacity: 0 }} atLeave={{ opacity: 0 }} atActive={{ opacity: 1 }} className="switch-wrapper">
+                    <Route path="/createPost">
+                        <PostCreator/>
+                    </Route>
                     <Route path="/profile">
                         <ProfilePanel store={userInfoStore} />
                     </Route>
